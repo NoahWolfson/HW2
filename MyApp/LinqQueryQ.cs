@@ -26,7 +26,9 @@ class PracticeQueries {
         IEnumerable<SalesSummary> salesSummaries = 
             from s4 in sales
             where s4.Item.Contains("LLC")
-            select new SalesSummary(s4.Item, s4.Quantity * s4.PricePerItem, s4.ExpeditedShipping ? s4.Address + " EXPEDITE" : s4.Address);
+            let totalPrice = s4.Quantity * s4.PricePerItem
+            orderby totalPrice
+            select new SalesSummary(s4.Item, totalPrice, s4.ExpeditedShipping ? s4.Address + " EXPEDITE" : s4.Address);
 
     }
 
